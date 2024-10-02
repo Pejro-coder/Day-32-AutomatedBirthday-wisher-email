@@ -10,26 +10,60 @@
 
 import datetime as dt
 import pandas
+import random
+import smtplib
 
+# --------------------------- TODAY'S DATE ---------------------------
 today = dt.datetime.now()
 current_year = today.year
 current_month = today.month
 current_day = today.day
 
-# with open("birthdays.csv", "r") as data_file:
-#     birthdays = data_file.read()
-#     print(birthdays)
+# ---------------------- BIRTHDAY PERSON'S NAME ----------------------
+data_frame = pandas.read_csv("birthdays.csv")
+names_list = data_frame["name"].to_list
+print(names_list)
+print(data_frame)
+filtered_months = data_frame[data_frame.month == 10]
+filtered_days = filtered_months[filtered_months.day == 2]
+filtered_name = filtered_days["name"].to_string()
+filtered_email = filtered_days["email"].to_string()
 
-df = pandas.read_csv("birthdays.csv")
-print(df)
-month_list = df["month"].to_list()
-day_list = df["day"].to_list()
-print(month_list)
-print(day_list)
-#
-# for month in month_list:
-#     if month == current_month:
-#         print(month_list.index(month))
+print(filtered_name)
+print(filtered_email)
 
-print(df["day"])
 
+def clean_string(uncleaned):
+    filtered_string = []
+    allowed_chars = set(" @.")
+    for sign in uncleaned:
+        if sign.isalpha() or sign in allowed_chars:
+            filtered_string.append(sign)
+    return "".join(filtered_string).strip()
+
+
+final_name = clean_string(filtered_name)
+final_email = clean_string(filtered_email)
+
+print()
+print(final_name)
+print(final_email)
+
+# ------------ BIRTHDAY-PERSONS NAME INTO A RANDOM LETTER ------------
+random_letter = random.randint(1, 3)
+with open(f"letter_templates/letter_{random_letter}.txt", "r") as letter_file:
+    letter = letter_file.read()
+
+letter = letter.replace("[NAME]", final_name)
+
+print(letter)
+
+# ------------------------ SEND EMAIL ------------------------
+MY_GMAIL = "peter.stepanic@gmail.com"
+MY_PASSWORD = "rduqhmkbprxdhgzk"
+
+
+# if final_name.isalpha():
+#     print(type(final_name))
+#     print("imamo birthday boja")
+#     print(final_name)
