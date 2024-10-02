@@ -21,8 +21,6 @@ current_day = today.day
 
 # ---------------------- BIRTHDAY PERSON'S NAME ----------------------
 data_frame = pandas.read_csv("birthdays.csv")
-names_list = data_frame["name"].to_list
-print(names_list)
 print(data_frame)
 filtered_months = data_frame[data_frame.month == 10]
 filtered_days = filtered_months[filtered_months.day == 2]
@@ -48,22 +46,25 @@ final_email = clean_string(filtered_email)
 print()
 print(final_name)
 print(final_email)
-
+if final_name != "Series":
 # ------------ BIRTHDAY-PERSONS NAME INTO A RANDOM LETTER ------------
-random_letter = random.randint(1, 3)
-with open(f"letter_templates/letter_{random_letter}.txt", "r") as letter_file:
-    letter = letter_file.read()
+    random_letter = random.randint(1, 3)
+    with open(f"letter_templates/letter_{random_letter}.txt", "r") as letter_file:
+        letter = letter_file.read()
 
-letter = letter.replace("[NAME]", final_name)
+    letter = letter.replace("[NAME]", final_name)
 
-print(letter)
+    print(letter)
 
 # ------------------------ SEND EMAIL ------------------------
-MY_GMAIL = "peter.stepanic@gmail.com"
-MY_PASSWORD = "rduqhmkbprxdhgzk"
+    MY_GMAIL = "peter.stepanic@gmail.com"
+    MY_PASSWORD = "rduqhmkbprxdhgzk"
 
-
-# if final_name.isalpha():
-#     print(type(final_name))
-#     print("imamo birthday boja")
-#     print(final_name)
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()
+        connection.login(user=MY_GMAIL, password=MY_PASSWORD)
+        connection.sendmail(
+            from_addr=MY_GMAIL,
+            to_addrs=final_email,
+            msg=f"Subject: Good day!\n\n{letter}"
+        )
