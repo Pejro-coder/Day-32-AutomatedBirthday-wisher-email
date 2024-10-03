@@ -5,7 +5,6 @@ import smtplib
 
 # ------------------------------ TODAY'S DATE ------------------------------
 today = dt.datetime.now()
-current_year = today.year
 current_month = today.month
 current_day = today.day
 
@@ -16,15 +15,11 @@ filtered_days = filtered_months[filtered_months.day == current_day]
 
 filtered_names = []
 filtered_emails = []
-
 for index, row in filtered_days.iterrows():
     filtered_names.append(row["name"])
     filtered_emails.append(row["email"])
-
-
 print(f"Filtered names: {filtered_names}")
 print(f"Filtered emails: {filtered_emails}")
-
 
 if len(filtered_names) > 0:
     # --------------- BIRTHDAY-PERSONS NAME INTO A RANDOM LETTER ---------------
@@ -39,7 +34,7 @@ if len(filtered_names) > 0:
 
     # ------------------------------- SEND EMAIL -------------------------------
     MY_GMAIL = "peter.stepanic@gmail.com"
-    MY_PASSWORD = "sgfuqhttwlapewzv"
+    MY_PASSWORD = "eqae jdrg stmk xasl"
 
     for letter in final_letters:
         current_email = filtered_emails[final_letters.index(letter)]
@@ -52,4 +47,3 @@ if len(filtered_names) > 0:
                 msg=f"Subject: Happy birthday!\n\n{letter}"
             )
         print(f"SENDING EMAIL TO {current_email}")
-
