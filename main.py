@@ -38,7 +38,7 @@ if len(filtered_names) > 0:
 
     for letter in final_letters:
         current_email = filtered_emails[final_letters.index(letter)]
-        with smtplib.SMTP("smtp.gmail.com") as connection:
+        with smtplib.SMTP("smtp.gmail.com", 587) as connection:
             connection.starttls()
             connection.login(user=MY_GMAIL, password=MY_PASSWORD)
             connection.sendmail(
@@ -47,3 +47,5 @@ if len(filtered_names) > 0:
                 msg=f"Subject: Happy birthday!\n\n{letter}"
             )
         print(f"SENDING EMAIL TO {current_email}")
+else:
+    print("No birthdays on this day.")
