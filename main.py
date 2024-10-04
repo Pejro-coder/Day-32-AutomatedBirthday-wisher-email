@@ -23,13 +23,11 @@ print(f"Filtered emails: {filtered_emails}")
 
 if len(filtered_names) > 0:
     # --------------- BIRTHDAY-PERSONS NAME INTO A RANDOM LETTER ---------------
-    random_letter = random.randint(1, 3)
-    with open(f"letter_templates/letter_{random_letter}.txt", "r") as letter_file:
-        letter_template = letter_file.read()
-
     final_letters = []
     for name in filtered_names:
-        letter = letter_template.replace("[NAME]", name)
+        with open(f"letter_templates/letter_{random.randint(1, 3)}.txt", "r") as letter_file:
+            letter = letter_file.read()
+        letter = letter.replace("[NAME]", name)
         final_letters.append(letter)
 
     # ------------------------------- SEND EMAIL -------------------------------
